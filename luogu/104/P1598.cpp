@@ -5,7 +5,7 @@ int main() {
     vector<int>count(26, 0);
     int maxH = 0;
     for(int i = 0;i < 4;i++) {
-        cin.ignore();
+        // cin.ignore();
         string input;
         getline(cin, input);
         for(auto it : input) {
