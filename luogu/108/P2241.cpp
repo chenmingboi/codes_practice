@@ -5,8 +5,9 @@ int main() {
     int n, m;
     cin >> n >> m;
     if(n > m) swap(n, m);
+    //这里要用long long 因为n*m*n大于了int的范围
+    long long num1 = 0, num2 = 0;
     //正方形
-    int num1 = 0, num2 = 0;
     for(int i = 1;i <= n;i++) {
         num1 += (m+1-i) * (n+1-i);
     }
