@@ -19,11 +19,29 @@ vector<int> add_gao(vector<int> a, vector<int> b) {
     }
     vector<int>result(len+1, 0);
     for(int i = 0;i < len;i++) {
-        int temp = a[i] + b[i];
-        result[i] = (result[i] + temp) % 10;
-        result[i+1] += (result[i] + temp) / 10;
+        result[i] = a[i] + b[i];
+    }
+    for(int i = 0;i < len;i++) {
+        result[i+1] += result[i] / 10;
+        result[i] %= 10;
     }
     while(result.size() >= 1 && result.back() == 0) result.pop_back();
+    return result;
+}
+//优化过后的高精度加法实现
+vector<int> add(const vector<int>& a, const vector<int>& b) {
+    int lena = a.size(), lenb = b.size();
+    int len = max(lena, lenb);
+    vector<int>result(len, 0);
+    int carry = 0;//进位
+    for(int i = 0;i < len;i++) {
+        int sum = carry;
+        if(i < lena) sum += a[i];
+        if(i < lenb) sum += b[i];
+        result.push_back(sum % 10);
+        carry = sum / 10;
+    }
+    if(carry) result.push_back(carry);
     return result;
 }
 int main() {
