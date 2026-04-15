@@ -1,5 +1,5 @@
-const root = document.documentElement;
-const card = document.getElementById("glass-card");
+﻿const root = document.documentElement;
+const cards = Array.from(document.querySelectorAll(".tilt-card"));
 const canvas = document.getElementById("aurora");
 const ctx = canvas.getContext("2d");
 
@@ -10,10 +10,10 @@ const pointer = {
   y: window.innerHeight * 0.5,
 };
 
-const palette = ["#7ee8ff", "#5bb8ff", "#87f0d2", "#3c7ccf"];
+const palette = ["#6d8eff", "#8f60ff", "#f05bc2", "#66b3ff"];
 const blobs = Array.from({ length: 4 }, (_, i) => ({
-  radius: 140 + i * 28,
-  speed: 0.16 + i * 0.04,
+  radius: 150 + i * 30,
+  speed: 0.16 + i * 0.045,
   phase: Math.random() * Math.PI * 2,
   drift: 0.34 + i * 0.08,
 }));
@@ -39,13 +39,13 @@ function drawAurora(t) {
   for (let i = 0; i < blobs.length; i += 1) {
     const blob = blobs[i];
     const a = t * blob.speed + blob.phase;
-    const x = cw * (0.18 + 0.18 * i) + Math.sin(a) * cw * blob.drift * 0.16;
-    const y = ch * (0.35 + 0.12 * i) + Math.cos(a * 1.3) * ch * 0.24;
-    const r = blob.radius + Math.sin(a * 1.5) * 28;
+    const x = cw * (0.16 + 0.2 * i) + Math.sin(a) * cw * blob.drift * 0.15;
+    const y = ch * (0.28 + 0.13 * i) + Math.cos(a * 1.28) * ch * 0.23;
+    const r = blob.radius + Math.sin(a * 1.52) * 30;
 
     const g = ctx.createRadialGradient(x, y, r * 0.12, x, y, r);
-    g.addColorStop(0, `${palette[i]}cc`);
-    g.addColorStop(0.48, `${palette[(i + 1) % palette.length]}66`);
+    g.addColorStop(0, `${palette[i]}d8`);
+    g.addColorStop(0.5, `${palette[(i + 1) % palette.length]}70`);
     g.addColorStop(1, "rgba(0,0,0,0)");
 
     ctx.fillStyle = g;
@@ -72,12 +72,20 @@ function animate(now) {
 
   root.style.setProperty("--mx", `${(nx * 100).toFixed(2)}%`);
   root.style.setProperty("--my", `${(ny * 100).toFixed(2)}%`);
-  card.style.transform = `rotateX(${rx.toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg)`;
-  card.style.boxShadow = `
-    inset 1px 1px 0 rgba(255, 255, 255, 0.5),
-    inset -1px -1px 0 rgba(255, 255, 255, 0.1),
-    ${(-ry * 1.4).toFixed(1)}px ${(14 - rx * 0.8).toFixed(1)}px 58px rgba(0, 11, 22, 0.48)
-  `;
+
+  cards.forEach((card, index) => {
+    const depth = 1 - index * 0.22;
+    const floatY = Math.sin(now * 0.0012 + index * 1.1) * 1.4;
+    const cardRx = rx * depth;
+    const cardRy = ry * depth;
+
+    card.style.transform = `rotateX(${cardRx.toFixed(2)}deg) rotateY(${cardRy.toFixed(2)}deg) translateY(${floatY.toFixed(2)}px)`;
+    card.style.boxShadow = `
+      inset 1px 1px 0 rgba(255, 255, 255, 0.48),
+      inset -1px -1px 0 rgba(255, 255, 255, 0.1),
+      ${(-cardRy * 1.35).toFixed(1)}px ${(16 - cardRx * 0.85).toFixed(1)}px 60px rgba(13, 2, 35, 0.52)
+    `;
+  });
 
   drawAurora(now * 0.001);
   requestAnimationFrame(animate);

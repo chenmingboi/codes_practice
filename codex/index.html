@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
@@ -16,31 +16,50 @@
     <canvas id="aurora" aria-hidden="true"></canvas>
 
     <main class="stage">
-      <section class="glass" id="glass-card">
-        <div class="gloss"></div>
-        <p class="eyebrow">LIQUID INTERFACE</p>
-        <h1>动态玻璃</h1>
-        <p class="lead">
-          透光、折射、流动高光和轻量 3D 视差，共同构成丝滑的动态玻璃体验。
-        </p>
+      <div class="panel-grid">
+        <section class="glass hero-card tilt-card">
+          <div class="gloss"></div>
+          <p class="eyebrow">AURORA GLASS</p>
+          <h1>Blue Purple Pink</h1>
+          <p class="lead">
+            Smooth glass motion with refraction edge, flowing light and pointer depth.
+          </p>
 
-        <div class="metrics">
-          <article class="metric">
-            <p>Blur</p>
-            <strong>24px</strong>
-          </article>
-          <article class="metric">
-            <p>Motion</p>
-            <strong>RAF</strong>
-          </article>
-          <article class="metric">
-            <p>Frame</p>
-            <strong>~60 FPS</strong>
-          </article>
-        </div>
+          <div class="metrics">
+            <article class="metric">
+              <p>Blur</p>
+              <strong>26px</strong>
+            </article>
+            <article class="metric">
+              <p>Theme</p>
+              <strong>B/P/P</strong>
+            </article>
+            <article class="metric">
+              <p>Frame</p>
+              <strong>~60 FPS</strong>
+            </article>
+          </div>
 
-        <button class="cta" type="button">触碰玻璃流光</button>
-      </section>
+          <button class="cta" type="button">Explore Liquid UI</button>
+        </section>
+
+        <section class="glass login-card tilt-card">
+          <div class="gloss"></div>
+          <p class="eyebrow">WELCOME BACK</p>
+          <h2>Login</h2>
+          <form class="login-form" action="#" method="post">
+            <label>
+              <span>Email</span>
+              <input type="email" name="email" placeholder="hello@domain.com" />
+            </label>
+            <label>
+              <span>Password</span>
+              <input type="password" name="password" placeholder="••••••••" />
+            </label>
+            <button class="login-btn" type="submit">Sign In</button>
+          </form>
+        </section>
+      </div>
     </main>
 
     <script src="./script.js"></script>
