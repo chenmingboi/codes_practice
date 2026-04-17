@@ -7,18 +7,25 @@ int main() {
     int n;
     long long c, result = 0;
     cin >> n >> c;
-    vector<long long>a(n);
+    // vector<long long>a(n);
+    unordered_map<long long, long long>a;
+    vector<long long>tempa(n);
     for(int i = 0;i < n;i++) {
-        cin >> a[i];
+        int num;
+        cin >> num;
+        a[num]++;
+        tempa[i] = num;
     }
     //复杂度为n^2，TLE
-    //尝试用二分，分为左，中，右
+    // for(int i = 0;i < n;i++) {
+    //     for(int j = i+1;j < n;j++) {
+    //         if(abs(a[i]-a[j]) == c) {
+    //             result++;
+    //         }
+    //     }
+    // }
     for(int i = 0;i < n;i++) {
-        for(int j = i+1;j < n;j++) {
-            if(abs(a[i]-a[j]) == c) {
-                result++;
-            }
-        }
+        result += a[tempa[i]-c];
     }
     cout << result;
     return 0;
