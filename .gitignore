@@ -1,3 +1,4 @@
 *.exe
 /codex
 /codex2
+.vscode/
