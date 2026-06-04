@@ -36,14 +36,21 @@ int main() {
     while(t--) {
         int n, m;
         cin >> n >> m;
-        edges.resize(m);
-        
+        dist.assign(n+1, INF);
         for(int i = 0;i < m;i++) {
             int u, v, w;
             cin >> u >> v >> w;
             if(w >= 0) {
-                
-            }
+                edges.push_back({v, u, w});
+            } 
+            edges.push_back({u, v, w});
         }
+        if(bellman_ford(n)) {
+            cout << "YES" << '\n';
+        } else {
+            cout << "NO" << '\n';
+        }
+        edges.clear();
     }
+    return 0;
 }
