@@ -1,11 +1,11 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-
 const int INF = 0x3f3f3f3f;
 const int no = pow(2, 31) - 1;
 
-//floyd
+
+//floy
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
@@ -36,6 +36,160 @@ int main() {
     }
     return 0;
 }
+
+// //bellman_ford
+// struct Edge{
+//     int u;
+//     int v;
+//     int w;
+// };
+
+// bool comp(const Edge& a, const Edge& b) {
+//     return a.w < b.w;
+// }
+
+// vector<Edge>edges;
+// vector<int>dist;
+
+// void bellman_ford(int s, int n) {
+//     dist[s] = 0;
+//     // sort(edges.begin(), edges.end(), comp);
+//     bool flag = false;
+//     for(int i = 1;i <= n-1;i++) {
+//         flag = false;
+//         for(auto edge : edges) {
+//             int u = edge.u, v = edge.v, w = edge.w;
+//             if(dist[u] != INF && dist[v] > dist[u] + w) {
+//                 dist[v] = dist[u] + w;
+//                 flag = true;
+//             }
+//         }
+//         if(!flag) break;
+//     }
+// }
+// int main(){
+//     ios::sync_with_stdio(false);
+//     cin.tie(nullptr);
+//     int n, m, s;
+//     cin >> n >> m >> s;
+//     edges.resize(m), dist.resize(n+1, INF);
+//     for(int i = 0;i < m;i++) {
+//         // cin >> edges[i].u >> edges[i].v >> edges[i].w;
+//         int u, v, w;
+//         cin >> u >> v >> w;
+//         edges[i] = {u, v, w};
+//     }
+//     bellman_ford(s, n);
+//     for(int i = 1;i <= n;i++) {
+//         if(dist[i] != INF) {
+//             cout << dist[i] << ' ';
+//         } else {
+//             cout << no << ' ';
+//         }
+//     }
+//     return 0;
+// }  
+// //dijkstra
+// struct Edge {
+//     int v;
+//     int w;
+// };
+
+// struct Node{
+//     int u;
+//     //这里的d表示从s->u的最短路径长度
+//     int d;
+//     bool operator>(const Node& other) const {
+//         return d > other.d;
+//     }
+// };
+
+// vector<vector<Edge>>edges;
+// vector<bool>vis;
+// vector<int>dist;
+
+// void dijkstra(int s, int n) {
+//     priority_queue<Node, vector<Node>, greater<Node>>q;
+//     q.push({s, 0});
+//     dist[s] = 0;
+//     while(!q.empty()) {
+//         int u = q.top().u, d = q.top().d;
+//         q.pop();
+//         if(vis[u]) continue;
+//         vis[u] = true;
+//         for(auto edge : edges[u]) {
+//             int v = edge.v, w = edge.w;
+//             if(dist[v] > d + w) {
+//                 dist[v] = d + w;
+//                 q.push({v, dist[v]});
+//             }
+//         }
+//     }
+// }
+// int main() {
+//     ios::sync_with_stdio(false);
+//     cin.tie(nullptr);
+//     int n, m, s;
+//     cin >> n >> m >> s;
+//     edges.resize(n+1);
+//     vis.resize(n+1, false);
+//     dist.resize(n+1, INF);
+//     for(int i = 0;i < m;i++) {
+//         int u, v, w;
+//         cin >> u >> v >> w;
+//         edges[u].push_back({v, w});
+//     }
+//     dijkstra(s, n);
+//     for(int i = 1;i <= n;i++) {
+//         if(dist[i] != INF) {
+//             cout << dist[i] << ' ';
+//         } else {
+//             cout << no << ' ';
+//         }
+//     }
+//     return 0;
+// }
+
+
+
+
+
+
+
+// const int INF = 0x3f3f3f3f;
+// const int no = pow(2, 31) - 1;
+
+// //floyd
+// int main() {
+//     ios::sync_with_stdio(false);
+//     cin.tie(nullptr);
+//     int n, m, s;
+//     cin >> n >> m >> s;
+//     vector<vector<int>>dist(n+1, vector<int>(n+1, INF));
+//     for(int i = 1;i <= n;i++) dist[i][i] = 0;
+//     for(int i = 0;i < m;i++) {
+//         int u, v, w;
+//         cin >> u >> v >> w;
+//         dist[u][v] = min(dist[u][v], w);
+//     }
+//     for(int k = 1;k <= n;k++) {
+//         for(int i = 1;i <= n;i++) {
+//             for(int j = 1;j <= n;j++) {
+//                 if(dist[i][k] != INF && dist[k][j] != INF) {
+//                     dist[i][j] = min(dist[i][j], dist[i][k] + dist[k][j]);
+//                 }
+//             }
+//         }
+//     }
+//     for(int i = 1;i <= n;i++) {
+//         if(dist[s][i] != INF) {
+//             cout << dist[s][i] << ' ';
+//         } else {
+//             cout << no << ' ';
+//         }
+//     }
+//     return 0;
+// }
 // //bellman_ford
 // struct Edge{
 //     int u;

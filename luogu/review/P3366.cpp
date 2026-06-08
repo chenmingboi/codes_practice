@@ -2,6 +2,7 @@
 using namespace std;
 
 const int INF = 0x3f3f3f3f;
+
 //kruskal
 struct Edge{
     int u;
@@ -21,16 +22,14 @@ int findfa(int x) {
     return ((x == fa[x]) ? fa[x] : fa[x] = findfa(fa[x]));
 }
 
-bool merge(int u, int v) {
-    int fau = findfa(u), fav = findfa(v);
-    if(fau == fav) return false;
-    if(weight[fau] < weight[fav]) {
-        fa[fau] = fav;
+bool merge(int x, int y) {
+    int fax = findfa(x), fay = findfa(y);
+    if(fax == fay) return false;
+    if(weight[fax] > weight[fay]) {
+        fa[fay] = fax;
     } else {
-        if(weight[fau] == weight[fav]) {
-            weight[fau]++;
-        }
-        fa[fav] = fau;
+        if(weight[fax] == weight[fay]) weight[fay]++;
+        fa[fax] = fay;
     }
     return true;
 }
@@ -39,13 +38,11 @@ int kruskal(int n) {
     sort(edges.begin(), edges.end(), comp);
     int ans = 0;
     int edgeCnt = 0;
-    //这里不用写为n-1个循环，这里循环一遍edges集合就行
-    // for(int i = 1;i < n;i++) {
     for(auto edge : edges) {
         int u = edge.u, v = edge.v, w = edge.w;
         if(merge(u, v)) {
             edgeCnt++;
-            ans+= w;
+            ans += w;
         }
         if(edgeCnt == n-1) break;
     }
@@ -61,7 +58,8 @@ int main() {
     cin.tie(nullptr);
     int n, m;
     cin >> n >> m;
-    edges.resize(m), fa.resize(n+1), weight.resize(n+1, 1);
+    edges.resize(m), fa.resize(n+1);
+    weight.resize(n+1, 1);
     for(int i = 1;i <= n;i++) fa[i] = i;
     for(int i = 0;i < m;i++) {
         int x, y, z;
@@ -76,6 +74,152 @@ int main() {
     }
     return 0;
 }
+// //prim
+// struct Edge {
+//     int v;
+//     int w;
+// };
+
+// struct Node{
+//     int u;
+//     //这里的d表示的是u的父节点到u的最小距离
+//     //即连通u 需要花费的最小cost
+//     int d;
+//     bool operator>(const Node& other) const {
+//         return d > other.d;
+//     }
+// };
+
+// vector<vector<Edge>>edges;
+// vector<bool>inTree;
+// //这里的dist用来记录节点u的所有父节点到达u的最小distance
+// vector<int>dist;
+
+// int prim(int n) {
+//     int ans = 0;
+//     int nodeCnt = 0;
+//     priority_queue<Node, vector<Node>, greater<Node>>q;
+//     q.push({1, 0});
+//     dist[1] = 0;
+//     while(!q.empty()) {
+//         if(nodeCnt == n) break;
+//         int u = q.top().u, d = q.top().d;
+//         q.pop();
+//         if(inTree[u]) continue;
+//         inTree[u] = true;
+//         ans += d;
+//         nodeCnt++;
+//         for(auto edge : edges[u]) {
+//             int v  = edge.v, w = edge.w;
+//             if(dist[v] > w) {
+//                 dist[v] = w;
+//                 q.push({v, dist[v]});
+//             }
+//         }
+//     }
+//     if(nodeCnt != n) {
+//         return -1;
+//     } else {
+//         return ans;
+//     }
+// }
+
+// int main() {
+//     ios::sync_with_stdio(false);
+//     cin.tie(nullptr);
+//     int n, m;
+//     cin >> n >> m;
+//     edges.resize(n+1), inTree.resize(n+1, false);
+//     dist.resize(n+1, INF);
+//     for(int i = 0;i < m;i++) {
+//         int x, y, z;
+//         cin >> x >> y >> z;
+//         edges[x].push_back({y, z});
+//         edges[y].push_back({x, z});
+//     }
+//     int ans = prim(n);
+//     if(ans == -1) {
+//         cout << "orz";
+//     } else {
+//         cout << ans;
+//     }
+//     return 0;
+// }
+
+// //kruskal
+// struct Edge{
+//     int u;
+//     int v;
+//     int w;
+// };
+
+// bool comp(const Edge& a, const Edge& b) {
+//     return a.w < b.w;
+// }
+
+// vector<Edge>edges;
+// vector<int>fa;
+// vector<int>weight;
+
+// int findfa(int x) {
+//     return ((x == fa[x]) ? fa[x] : fa[x] = findfa(fa[x]));
+// }
+
+// bool merge(int u, int v) {
+//     int fau = findfa(u), fav = findfa(v);
+//     if(fau == fav) return false;
+//     if(weight[fau] < weight[fav]) {
+//         fa[fau] = fav;
+//     } else {
+//         if(weight[fau] == weight[fav]) {
+//             weight[fau]++;
+//         }
+//         fa[fav] = fau;
+//     }
+//     return true;
+// }
+
+// int kruskal(int n) {
+//     sort(edges.begin(), edges.end(), comp);
+//     int ans = 0;
+//     int edgeCnt = 0;
+//     //这里不用写为n-1个循环，这里循环一遍edges集合就行
+//     // for(int i = 1;i < n;i++) {
+//     for(auto edge : edges) {
+//         int u = edge.u, v = edge.v, w = edge.w;
+//         if(merge(u, v)) {
+//             edgeCnt++;
+//             ans+= w;
+//         }
+//         if(edgeCnt == n-1) break;
+//     }
+//     if(edgeCnt != n-1) {
+//         return -1;
+//     } else {
+//         return ans;
+//     }
+// }
+
+// int main() {
+//     ios::sync_with_stdio(false);
+//     cin.tie(nullptr);
+//     int n, m;
+//     cin >> n >> m;
+//     edges.resize(m), fa.resize(n+1), weight.resize(n+1, 1);
+//     for(int i = 1;i <= n;i++) fa[i] = i;
+//     for(int i = 0;i < m;i++) {
+//         int x, y, z;
+//         cin >> x >> y >> z;
+//         edges[i] = {x, y, z};
+//     }
+//     int ans = kruskal(n);
+//     if(ans == -1) {
+//         cout << "orz";
+//     } else {
+//         cout << ans;
+//     }
+//     return 0;
+// }
 
 // //prim
 // struct Edge{
