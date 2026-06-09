@@ -1,36 +1,40 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-const int INF = 0x3f3f3f3f;
 const int MOD = 100003;
+const int INF = 0x3f3f3f3f;
 
-struct Edge {
+struct Edge{
     int v;
     int w;
 };
-vector<vector<int>>edges;
-vector<int>ans;
-vector<bool>vis;
-vector<int>dist;
 
-//这道题更适合用bfs, 这里是无向图，还要添加dist来判断是是否要更新
-void bfs() {
+vector<vector<Edge>>edges;
+vector<int>ans;
+vector<int>dist;
+vector<bool>vis;
+
+void bfs(int s) {
     queue<pair<int, int>>q;
+    //q.first = node q.second = s->node 's dist
     q.push({1, 0});
+    dist[1] = 0;
+    ans[1] = 1;
     while(!q.empty()) {
-        int u = q.front().first, fa = q.front().second;
+        int u = q.front().first, d = q.front().second;
         q.pop();
-        if(vis[u]) continue;
+        if(vis[u])continue;
         vis[u] = true;
-        for(auto v : edges[u]) {
-            if(v == fa) continue;
-            if(dist[v] > dist[u] + 1) {
-                dist[v] = dist[u] + 1;
+        for(auto edge : edges[u]) {
+            int v = edge.v, w = edge.w;
+            if(dist[v] > w + d) {
+                dist[v] = w + d;
                 ans[v] = ans[u];
-                q.push({v, u});
-            } else if(dist[v] == dist[u] + 1) {
-                ans[v] = (ans[v] + ans[u]) % MOD;
-            }
+                q.push({v, dist[v]});
+            } else if(dist[v] == w + d) {
+                ans[v] += ans[u];
+                ans[v] %= MOD;
+            } 
         }
     }
 }
@@ -47,15 +51,88 @@ int main() {
     for(int i = 0;i < m;i++) {
         int x, y;
         cin >> x >> y;
-        edges[x].push_back(y);
-        edges[y].push_back(x);
+        edges[x].push_back({y, 1});
+        edges[y].push_back({x, 1});
     }
-    ans[1] = 1;
-    dist[1] = 0;
-    bfs();
-    for(int i = 1;i <= n;i++) cout << ans[i] << '\n';
+    bfs(1);
+    for(int i = 1;i <= n;i++) {
+        cout << ans[i] << '\n';
+    }
     return 0;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// const int INF = 0x3f3f3f3f;
+// const int MOD = 100003;
+
+// struct Edge {
+//     int v;
+//     int w;
+// };
+// vector<vector<int>>edges;
+// vector<int>ans;
+// vector<bool>vis;
+// vector<int>dist;
+
+// //这道题更适合用bfs, 这里是无向图，还要添加dist来判断是是否要更新
+// void bfs() {
+//     queue<pair<int, int>>q;
+//     q.push({1, 0});
+//     while(!q.empty()) {
+//         int u = q.front().first, fa = q.front().second;
+//         q.pop();
+//         if(vis[u]) continue;
+//         vis[u] = true;
+//         for(auto v : edges[u]) {
+//             if(v == fa) continue;
+//             if(dist[v] > dist[u] + 1) {
+//                 dist[v] = dist[u] + 1;
+//                 ans[v] = ans[u];
+//                 q.push({v, u});
+//             } else if(dist[v] == dist[u] + 1) {
+//                 ans[v] = (ans[v] + ans[u]) % MOD;
+//             }
+//         }
+//     }
+// }
+
+// int main() {
+//     ios::sync_with_stdio(false);
+//     cin.tie(nullptr);
+//     int n, m;
+//     cin >> n >> m;
+//     edges.resize(n+1);
+//     ans.resize(n+1, 0);
+//     vis.resize(n+1, false);
+//     dist.resize(n+1, INF);
+//     for(int i = 0;i < m;i++) {
+//         int x, y;
+//         cin >> x >> y;
+//         edges[x].push_back(y);
+//         edges[y].push_back(x);
+//     }
+//     ans[1] = 1;
+//     dist[1] = 0;
+//     bfs();
+//     for(int i = 1;i <= n;i++) cout << ans[i] << '\n';
+//     return 0;
+// }
 
 // //dijkstra
 // struct Edge {
